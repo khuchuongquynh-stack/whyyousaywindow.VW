@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>whyyousaywindow:D</title>
+<title>whyyousaywindow.VW</title>
 
 <style>
 html, body {
@@ -14,7 +14,7 @@ html, body {
     background: #000;
     color: #fff;
 
-    animation: flash 0.5s steps(1) infinite;
+    animation: flash 0.5s steps(0.6) infinite;
 }
 
 @keyframes flash {
@@ -47,7 +47,7 @@ html, body {
 
 const WINDOW_COUNT = 20000;
 
-const trollWindows = [];
+const trollWindows = [20000];
 
 
 // ================================
@@ -140,7 +140,7 @@ body {
     background: #000;
 
     animation:
-        blackWhite 1.5s steps(1) infinite;
+        blackWhite 0.5s steps(0.6) infinite;
 
 }
 
@@ -348,16 +348,48 @@ for (
     let i = 0;
     i < WINDOW_COUNT;
     i++
-) {
+  ) {
 
     setTimeout(() => {
 
-        createTrollWindow(i);
+        createTrollWindow(i)
 
-    }, i * 80);
+        createTrollwindow(id)
+
+    }, i * 1);
 
          }
+// ================================
+// TRANG GỐC ĐÓNG
+// ================================
 
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        for (const win of trollWindows) {
+
+            try {
+
+                if (
+                    win &&
+                    !win.opened
+                ) {
+
+                    win.close(  
+                              createTrollwindow(id) 
+                       );
+
+                }
+
+            } catch (e) {}
+
+        }
+
+    }
+);
+
+</script>
 </script>
 </body>
 </html>
